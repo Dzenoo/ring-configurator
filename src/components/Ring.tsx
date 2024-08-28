@@ -83,10 +83,12 @@ const Ring: React.FC<{
           rotation={[Math.PI / 2, 0, 0]}
           scale={2.228}
         >
-          <meshStandardMaterial
-            metalness={1.0}
+          <meshPhysicalMaterial
             roughness={0.1}
+            metalness={1.0}
             color={ringColor}
+            clearcoat={1}
+            clearcoatRoughness={0.5}
           />
         </mesh>
       </group>

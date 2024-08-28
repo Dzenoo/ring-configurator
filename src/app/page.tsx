@@ -1,5 +1,6 @@
 "use client";
 
+import { EffectComposer, Bloom } from "@react-three/postprocessing";
 import { Canvas } from "@react-three/fiber";
 import { Environment, ScrollControls } from "@react-three/drei";
 import { Suspense, useState } from "react";
@@ -12,11 +13,15 @@ export default function Home() {
   const [accentColor, setAccentColor] = useState("lightblue");
 
   return (
-    <Canvas dpr={[1, 2]} camera={{ position: [5, 5, 10], fov: 29 }}>
+    <Canvas
+      gl={{ antialias: true }}
+      dpr={[1, 2]}
+      camera={{ position: [5, 5, 10], fov: 29 }}
+    >
       <color args={["#ffda75"]} attach="background" />
 
       <ambientLight intensity={0.5} />
-      <directionalLight position={[5, 10, 7.5]} intensity={1} />
+      <directionalLight position={[5, 10, 7.5]} intensity={5} />
 
       <ScrollControls pages={5} damping={0.5}>
         <Overlay />
@@ -29,7 +34,15 @@ export default function Home() {
         </Suspense>
       </ScrollControls>
 
-      <Environment preset="city" background={false} />
+      <Environment environmentIntensity={1} preset="city" background={false} />
+
+      <EffectComposer>
+        <Bloom
+          intensity={0.2}
+          luminanceThreshold={0.5}
+          luminanceSmoothing={0.1}
+        />
+      </EffectComposer>
     </Canvas>
   );
 }
