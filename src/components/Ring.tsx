@@ -13,17 +13,17 @@ const Ring: React.FC = () => {
           scale={1.018}
         >
           <MeshTransmissionMaterial
-            transmission={0.95} // High transmission for strong light passage
-            roughness={0.02} // Low roughness for a smooth, shiny surface
-            thickness={2.0} // Increased thickness for internal reflections
-            chromaticAberration={0.03} // Slight rainbow effect for realism
-            ior={2.417} // Index of refraction for diamond
-            color="#b9f2ff" // Neutral color for diamond shine
-            reflectivity={1.0} // Maximum reflectivity for a shiny look
-            clearcoat={1.0} // Strong clear coat for additional shine
-            clearcoatRoughness={0.0} // Smooth clear coat for sharp reflections
-            attenuationDistance={0.5} // Adjust for better internal light attenuation
-            attenuationColor="white" // Neutral color for attenuation
+            transmission={0.95}
+            roughness={0.02}
+            thickness={2.0}
+            chromaticAberration={0.03}
+            ior={2.417}
+            color="#b9f2ff"
+            reflectivity={1.0}
+            clearcoat={1.0}
+            clearcoatRoughness={0.0}
+            attenuationDistance={0.5}
+            attenuationColor="white"
           />
         </mesh>
         <mesh
