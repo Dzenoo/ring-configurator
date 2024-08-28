@@ -1,21 +1,35 @@
 "use client";
 
-import Ring from "@/components/Ring";
-import { Environment, OrbitControls } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
-import { Suspense } from "react";
+import { Environment, ScrollControls } from "@react-three/drei";
+import { Suspense, useState } from "react";
+import Overlay from "@/components/Overlay";
+import Ring from "@/components/Ring";
 
 export default function Home() {
+  const [gemColor, setGemColor] = useState("#b9f2ff");
+  const [ringColor, setRingColor] = useState("gold");
+  const [accentColor, setAccentColor] = useState("lightblue");
+
   return (
-    <Canvas dpr={[1, 2]} camera={{ position: [5, 5, 10], fov: 45 }}>
+    <Canvas dpr={[1, 2]} camera={{ position: [5, 5, 10], fov: 29 }}>
       <color args={["#ffda75"]} attach="background" />
+
       <ambientLight intensity={0.5} />
       <directionalLight position={[5, 10, 7.5]} intensity={1} />
-      <Suspense fallback={null}>
-        <Ring />
-      </Suspense>
+
+      <ScrollControls pages={5} damping={0.5}>
+        <Overlay />
+        <Suspense fallback={null}>
+          <Ring
+            gemColor={gemColor}
+            ringColor={ringColor}
+            accentColor={accentColor}
+          />
+        </Suspense>
+      </ScrollControls>
+
       <Environment preset="city" background={false} />
-      <OrbitControls />
     </Canvas>
   );
 }
