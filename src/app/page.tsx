@@ -23,7 +23,7 @@ export default function Home() {
       <ambientLight intensity={0.5} />
       <directionalLight position={[5, 10, 7.5]} intensity={5} />
 
-      <ScrollControls pages={5} damping={0.5}>
+      <ScrollControls pages={2} damping={0.5}>
         <Overlay />
         <Suspense fallback={null}>
           <Ring

@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { Scroll } from "@react-three/drei";
+import { useInView } from "react-intersection-observer";
+import gsap from "gsap";
 
 const Overlay: React.FC = () => {
   return (
@@ -7,58 +9,12 @@ const Overlay: React.FC = () => {
       <div className="px-10 w-screen">
         <Section hero>Discover Your Perfect Ring</Section>
         <Section align="right">
-          <div className="flex flex-col gap-5 justify-start pt-60">
-            <div className="h1-animate">
-              <h1 className="font-bold text-5xl text-white">
-                Custom Gemstones
-              </h1>
-            </div>
-            <div className="max-w-xl">
-              <p className="text-lg text-white">
-                Choose from a range of exquisite gemstones to craft a ring
-                that's uniquely yours. Whether you prefer a classic diamond or a
-                vibrant sapphire, find the perfect stone with ease.
-              </p>
-            </div>
-          </div>
-        </Section>
-        <Section align="left">
           <div className="flex flex-col gap-5 justify-start">
             <div>
-              <h1 className="font-bold text-5xl text-white">Metal Choices</h1>
+              <h1 className="font-bold text-5xl">Engraving Options</h1>
             </div>
             <div className="max-w-xl">
-              <p className="text-lg text-white">
-                Select from premium metals to complement your style. Choose from
-                timeless gold, platinum, or contemporary titanium to ensure your
-                ring looks stunning and lasts a lifetime.
-              </p>
-            </div>
-          </div>
-        </Section>
-        <Section align="right">
-          <div className="flex flex-col gap-5 justify-start">
-            <div>
-              <h1 className="font-bold text-5xl text-white">Band Styles</h1>
-            </div>
-            <div className="max-w-xl">
-              <p className="text-lg text-white">
-                Explore various band styles to find the perfect fit. Whether you
-                prefer a sleek modern band or a vintage-inspired design,
-                visualize and select the ideal band to match your gemstone.
-              </p>
-            </div>
-          </div>
-        </Section>
-        <Section align="left">
-          <div className="flex flex-col gap-5 justify-start">
-            <div>
-              <h1 className="font-bold text-5xl text-white">
-                Engraving Options
-              </h1>
-            </div>
-            <div className="max-w-xl">
-              <p className="text-lg text-white">
+              <p className="text-lg">
                 Add a personal touch with custom engraving. Whether it’s a
                 special date, initials, or a heartfelt message, make your ring
                 even more special with our engraving options.
@@ -71,14 +27,48 @@ const Overlay: React.FC = () => {
   );
 };
 
-const Section = React.forwardRef<
-  HTMLDivElement,
-  {
-    children: React.ReactNode;
-    hero?: boolean;
-    align?: "left" | "right" | "center";
-  }
->(({ children, hero, align }, ref) => {
+const Section: React.FC<{
+  children: React.ReactNode;
+  hero?: boolean;
+  align?: "left" | "right" | "center";
+}> = ({ children, hero, align }) => {
+  const { ref, inView } = useInView({
+    triggerOnce: true,
+    threshold: 0.5,
+  });
+
+  const gsapRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (inView) {
+      const element = gsapRef.current;
+      if (element) {
+        gsap.fromTo(
+          element.querySelectorAll(".item-div"),
+          {
+            clipPath: "polygon(0% 0%, 0% 0%, 0% 100%, 0% 100%)",
+            opacity: 0,
+            y: 75,
+          },
+          {
+            clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
+            opacity: 1,
+            y: 0,
+            duration: 1.5,
+            stagger: 0.1,
+            ease: "power4.inOut",
+          }
+        );
+      }
+    } else {
+      gsap.set(gsapRef.current?.querySelectorAll(".item-div") as any, {
+        clipPath: "polygon(0% 0%, 0% 0%, 0% 100%, 0% 100%)", // Hidden
+        opacity: 0,
+        y: 75,
+      });
+    }
+  }, [inView]);
+
   const alignmentClass =
     align === "right"
       ? "flex flex-col items-end"
@@ -88,12 +78,14 @@ const Section = React.forwardRef<
 
   return (
     <section
-      ref={ref}
+      ref={gsapRef}
       className={`py-10 h-screen w-full ${hero ? "" : alignmentClass}`}
     >
-      {children}
+      <div ref={ref}>
+        <div className="item-div">{children}</div>
+      </div>
     </section>
   );
-});
+};
 
 export default Overlay;

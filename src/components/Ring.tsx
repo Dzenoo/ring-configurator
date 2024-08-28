@@ -13,20 +13,8 @@ const Ring: React.FC<{
   const ringRef = useRef<THREE.Group>(null);
 
   useScrollGsapAnimation(ringRef, {
-    positions: [
-      new THREE.Vector3(0, -0.5, 1.5),
-      new THREE.Vector3(2, 1, 0),
-      new THREE.Vector3(-2, 1, -1.5),
-      new THREE.Vector3(1.5, -1, 0),
-      new THREE.Vector3(0, 0, 0),
-    ],
-    rotations: [
-      new THREE.Euler(0.2, 0.5, 0),
-      new THREE.Euler(0.5, -0.5, 0.3),
-      new THREE.Euler(-0.3, 1.5, 0.5),
-      new THREE.Euler(0.4, -0.2, -0.4),
-      new THREE.Euler(0, 0, 0),
-    ],
+    positions: [new THREE.Vector3(-2.5, -0.5, 0), new THREE.Vector3(0, 0, 0)],
+    rotations: [new THREE.Euler(0, 1.5, 0), new THREE.Euler(0, 0.5, 0)],
   });
 
   return (

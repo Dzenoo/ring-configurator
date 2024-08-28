@@ -20,3 +20,15 @@ canvas {
   bottom: 0;
   height: 100%;
 }
+
+h1,
+p {
+  color: "#52322b";
+}
+
+.item-div {
+  position: relative;
+  clip-path: polygon(0% 0%, 0% 0%, 0% 100%, 0% 100%); /* Initially hidden */
+  opacity: 0;
+  transition: clip-path 1.5s ease-out, opacity 1.5s ease-out; /* Optional: smooth transition */
+}
