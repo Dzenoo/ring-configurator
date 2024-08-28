@@ -8,7 +8,7 @@ const Overlay: React.FC = () => {
         <Section hero>Discover Your Perfect Ring</Section>
         <Section align="right">
           <div className="flex flex-col gap-5 justify-start pt-60">
-            <div>
+            <div className="h1-animate">
               <h1 className="font-bold text-5xl text-white">
                 Custom Gemstones
               </h1>
@@ -71,15 +71,14 @@ const Overlay: React.FC = () => {
   );
 };
 
-const Section = ({
-  children,
-  hero,
-  align,
-}: {
-  hero?: boolean;
-  children: React.ReactNode;
-  align?: "left" | "right" | "center";
-}) => {
+const Section = React.forwardRef<
+  HTMLDivElement,
+  {
+    children: React.ReactNode;
+    hero?: boolean;
+    align?: "left" | "right" | "center";
+  }
+>(({ children, hero, align }, ref) => {
   const alignmentClass =
     align === "right"
       ? "flex flex-col items-end"
@@ -88,10 +87,13 @@ const Section = ({
       : "flex flex-col items-center";
 
   return (
-    <section className={`py-10 h-screen w-full ${hero ? "" : alignmentClass}`}>
+    <section
+      ref={ref}
+      className={`py-10 h-screen w-full ${hero ? "" : alignmentClass}`}
+    >
       {children}
     </section>
   );
-};
+});
 
 export default Overlay;
