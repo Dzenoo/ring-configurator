@@ -5,7 +5,8 @@ import { Canvas } from "@react-three/fiber";
 import { Environment, ScrollControls } from "@react-three/drei";
 import { Suspense, useState } from "react";
 import Overlay from "@/components/Overlay";
-import Ring from "@/components/Ring";
+import Ring from "@/components/canvas/Ring";
+import CameraRig from "@/components/canvas/CameraRig";
 
 export default function Home() {
   const [gemColor, setGemColor] = useState("#b9f2ff");
@@ -26,11 +27,13 @@ export default function Home() {
       <ScrollControls pages={2} damping={0.5}>
         <Overlay />
         <Suspense fallback={null}>
-          <Ring
-            gemColor={gemColor}
-            ringColor={ringColor}
-            accentColor={accentColor}
-          />
+          <CameraRig>
+            <Ring
+              gemColor={gemColor}
+              ringColor={ringColor}
+              accentColor={accentColor}
+            />
+          </CameraRig>
         </Suspense>
       </ScrollControls>
 

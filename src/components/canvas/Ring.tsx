@@ -2,6 +2,8 @@ import React, { useRef } from "react";
 import * as THREE from "three";
 import { Center, MeshTransmissionMaterial, useGLTF } from "@react-three/drei";
 import { useScrollGsapAnimation } from "@/hooks/useScrollGsapAnimation";
+import { useFrame } from "@react-three/fiber";
+import { easing } from "maath";
 
 const Ring: React.FC<{
   gemColor: string;
@@ -15,6 +17,12 @@ const Ring: React.FC<{
   useScrollGsapAnimation(ringRef, {
     positions: [new THREE.Vector3(-2.5, -0.5, 0), new THREE.Vector3(0, 0, 0)],
     rotations: [new THREE.Euler(0, 1.5, 0), new THREE.Euler(0, 0.5, 0)],
+  });
+
+  useFrame((state, delta) => {
+    ringRef.current?.children.forEach((child: any) => {
+      easing.dampC(child.material, accentColor, 0.25, delta);
+    });
   });
 
   return (
