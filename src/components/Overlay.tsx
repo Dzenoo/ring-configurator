@@ -2,8 +2,12 @@ import React, { useEffect, useRef } from "react";
 import { Scroll } from "@react-three/drei";
 import { useInView } from "react-intersection-observer";
 import gsap from "gsap";
+import { useSnapshot } from "valtio";
+import state from "@/store";
 
 const Overlay: React.FC = () => {
+  const snap = useSnapshot(state);
+
   return (
     <Scroll html>
       <div className="px-10 w-screen">
@@ -19,6 +23,11 @@ const Overlay: React.FC = () => {
                 special date, initials, or a heartfelt message, make your ring
                 even more special with our engraving options.
               </p>
+            </div>
+            <div>
+              <button onClick={() => (state.intro = false)}>
+                Customize It
+              </button>
             </div>
           </div>
         </Section>
