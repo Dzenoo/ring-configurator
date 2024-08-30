@@ -1,31 +1,21 @@
+"use client";
 import React, { useRef } from "react";
 import * as THREE from "three";
 import { Center, MeshTransmissionMaterial, useGLTF } from "@react-three/drei";
 import { useScrollGsapAnimation } from "@/hooks/useScrollGsapAnimation";
-import { useFrame } from "@react-three/fiber";
-import { easing } from "maath";
-import { useSnapshot } from "valtio";
-import state from "@/store";
+import useStore from "@/store";
 
 const Ring: React.FC = () => {
-  const snap = useSnapshot(state);
-
+  const { intro, ringColor, gemColor, accentColor } = useStore();
   const { nodes } = useGLTF("/models/ring.glb") as any;
-
   const ringRef = useRef<THREE.Group>(null);
 
-  if (snap.intro) {
+  if (intro) {
     useScrollGsapAnimation(ringRef, {
       positions: [new THREE.Vector3(-2.5, -0.5, 0), new THREE.Vector3(0, 0, 0)],
       rotations: [new THREE.Euler(0, 1.5, 0), new THREE.Euler(0, 0.5, 0)],
     });
   }
-
-  // useFrame((state, delta) => {
-  //   ringRef.current?.children.forEach((child: any) => {
-  //     easing.dampC(child.material, accentColor, 0.25, delta);
-  //   });
-  // });
 
   return (
     <Center>
@@ -43,7 +33,7 @@ const Ring: React.FC = () => {
           <meshStandardMaterial
             roughness={0.1}
             metalness={0.9}
-            color={state.accentColor}
+            color={accentColor}
           />
         </mesh>
         <mesh
@@ -57,7 +47,7 @@ const Ring: React.FC = () => {
             thickness={2.0}
             chromaticAberration={0.03}
             ior={2.417}
-            color={state.gemColor}
+            color={gemColor}
             reflectivity={1.0}
             clearcoat={1.0}
             clearcoatRoughness={0.0}
@@ -73,7 +63,7 @@ const Ring: React.FC = () => {
           <meshStandardMaterial
             metalness={1.0}
             roughness={0.1}
-            color={snap.accentColor}
+            color={accentColor}
           />
         </mesh>
         <mesh
@@ -84,7 +74,7 @@ const Ring: React.FC = () => {
           <meshPhysicalMaterial
             roughness={0.1}
             metalness={1.0}
-            color={snap.ringColor}
+            color={ringColor}
             clearcoat={1}
             clearcoatRoughness={0.5}
           />

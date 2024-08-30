@@ -1,22 +1,21 @@
 "use client";
-
-import { EffectComposer, Bloom } from "@react-three/postprocessing";
+import React from "react";
 import { Canvas } from "@react-three/fiber";
+import { EffectComposer, Bloom } from "@react-three/postprocessing";
 import { Environment, OrbitControls, ScrollControls } from "@react-three/drei";
 import { Suspense } from "react";
 import Overlay from "@/components/Overlay";
 import Ring from "@/components/canvas/Ring";
 import CameraRig from "@/components/canvas/CameraRig";
-import { useSnapshot } from "valtio";
-import state from "@/store";
+import useStore from "@/store";
 import Customizer from "@/components/Customizer";
 
 export default function Home() {
-  const snap = useSnapshot(state);
+  const { intro } = useStore();
 
   return (
     <>
-      {!snap.intro && <Customizer />}
+      {!intro && <Customizer />}
       <Canvas
         gl={{ antialias: true }}
         dpr={[1, 2]}
@@ -27,7 +26,7 @@ export default function Home() {
         <ambientLight intensity={0.5} />
         <directionalLight position={[5, 10, 7.5]} intensity={5} />
 
-        {snap.intro && (
+        {intro && (
           <ScrollControls pages={2} damping={0.5}>
             <Overlay />
             <Suspense fallback={null}>
@@ -38,18 +37,15 @@ export default function Home() {
           </ScrollControls>
         )}
 
-        {!snap.intro && (
+        {!intro && (
           <>
             <OrbitControls
+              enableZoom={false}
               enableDamping={true}
               enablePan={false}
-              minDistance={5}
-              maxDistance={20}
             />
             <Suspense fallback={null}>
-              <CameraRig>
-                <Ring />
-              </CameraRig>
+              <Ring />
             </Suspense>
           </>
         )}

@@ -1,12 +1,12 @@
+"use client";
 import React, { useEffect, useRef } from "react";
 import { Scroll } from "@react-three/drei";
 import { useInView } from "react-intersection-observer";
 import gsap from "gsap";
-import { useSnapshot } from "valtio";
-import state from "@/store";
+import useStore from "@/store";
 
 const Overlay: React.FC = () => {
-  const snap = useSnapshot(state);
+  const { setIntro } = useStore();
 
   return (
     <Scroll html>
@@ -25,9 +25,7 @@ const Overlay: React.FC = () => {
               </p>
             </div>
             <div>
-              <button onClick={() => (state.intro = false)}>
-                Customize It
-              </button>
+              <button onClick={() => setIntro(false)}>Customize It</button>
             </div>
           </div>
         </Section>
