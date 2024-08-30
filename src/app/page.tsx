@@ -40,7 +40,12 @@ export default function Home() {
 
         {!snap.intro && (
           <>
-            <OrbitControls />
+            <OrbitControls
+              enableDamping={true}
+              enablePan={false}
+              minDistance={5}
+              maxDistance={20}
+            />
             <Suspense fallback={null}>
               <CameraRig>
                 <Ring />
