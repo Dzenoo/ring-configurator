@@ -9,6 +9,7 @@ import Ring from "@/components/canvas/Ring";
 import CameraRig from "@/components/canvas/CameraRig";
 import useStore from "@/store";
 import Customizer from "@/components/Customizer";
+import LoadingScreen from "@/components/LoadingScreen";
 
 export default function Home() {
   const { intro } = useStore();
@@ -16,6 +17,7 @@ export default function Home() {
   return (
     <>
       {!intro && <Customizer />}
+      <LoadingScreen />
       <Canvas
         gl={{ antialias: true }}
         dpr={[1, 2]}

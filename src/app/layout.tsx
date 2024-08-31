@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Playfair_Display_SC } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/Navbar";
 
 const playfair = Playfair_Display_SC({ subsets: ["latin"], weight: "400" });
 
@@ -17,10 +16,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={playfair.className}>
-        {/* <Navbar /> */}
-        {children}
-      </body>
+      <body className={playfair.className}>{children}</body>
     </html>
   );
 }

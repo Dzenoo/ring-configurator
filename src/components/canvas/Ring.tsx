@@ -20,7 +20,7 @@ const Ring: React.FC = () => {
   return (
     <Center>
       <group
-        position-y={1}
+        position={[0, 1, 0]}
         rotation={[0.8, 1.5, 0]}
         ref={ringRef}
         dispose={null}
