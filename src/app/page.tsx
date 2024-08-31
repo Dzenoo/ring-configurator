@@ -40,6 +40,7 @@ export default function Home() {
         {!intro && (
           <>
             <OrbitControls
+              autoRotate
               enableZoom={false}
               enableDamping={true}
               enablePan={false}
