@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef } from "react";
+import React, { useLayoutEffect, useRef } from "react";
 import * as THREE from "three";
 import { Center, MeshTransmissionMaterial, useGLTF } from "@react-three/drei";
 import { useScrollGsapAnimation } from "@/hooks/useScrollGsapAnimation";
@@ -16,6 +16,23 @@ const Ring: React.FC = () => {
       rotations: [new THREE.Euler(0, 1.5, 0), new THREE.Euler(0, 0.5, 0)],
     });
   }
+
+  useLayoutEffect(() => {
+    const updateScale = () => {
+      if (ringRef.current) {
+        const screenWidth = window.innerWidth;
+        const scale = screenWidth < 768 ? 0.7 : 1;
+        ringRef.current.scale.set(scale, scale, scale);
+      }
+    };
+
+    window.addEventListener("resize", updateScale);
+    updateScale();
+
+    return () => {
+      window.removeEventListener("resize", updateScale);
+    };
+  }, []);
 
   return (
     <Center>
